@@ -4,6 +4,7 @@ import { Image } from "emdash/ui";
 import Base from "../layouts/Base.astro";
 import PostCard from "../components/PostCard.astro";
 import { getReadingTime } from "../utils/reading-time";
+import wportHeroMain from "../assets/wport-hero/wport-hero-main.png";
 
 const { entries: posts, cacheHint } = await getEmDashCollection("posts");
 
@@ -59,6 +60,30 @@ function formatDate(date: Date | null | undefined) {
 ---
 
 <Base title="My Blog" description="Welcome to my blog">
+	<section class="wport-hero" aria-label="WPORT style hero">
+		<div class="wport-hero-inner">
+			<div class="wport-hero-content">
+				<p class="wport-kicker">WPORT 職涯導覽</p>
+				<h1 class="wport-title">找到方向，職涯就會開始加速。</h1>
+				<p class="wport-subtitle">
+					用更清楚的路徑規劃，從履歷到面試，把每一步都變成可驗證的進展。
+				</p>
+				<div class="wport-cta-row">
+					<a href="/posts" class="wport-btn wport-btn-primary">開始探索</a>
+					<a href="/_emdash/admin" class="wport-btn wport-btn-ghost">進入後台</a>
+				</div>
+			</div>
+			<div class="wport-hero-visual">
+				<img
+					src={wportHeroMain.src}
+					alt="WPORT mascots celebrating graduation"
+					class="wport-hero-main wport-animate-main"
+					loading="eager"
+				/>
+			</div>
+		</div>
+	</section>
+
 	{
 		posts.length === 0 ? (
 			<section class="empty-state">
@@ -174,6 +199,116 @@ function formatDate(date: Date | null | undefined) {
 </Base>
 
 <style>
+	.wport-hero {
+		width: 100vw;
+		margin-left: calc(50% - 50vw);
+		margin-right: calc(50% - 50vw);
+		background:
+			linear-gradient(
+				90deg,
+				rgba(239, 250, 249, 0.92) 0%,
+				rgba(247, 253, 252, 0.85) 40%,
+				rgba(255, 255, 255, 0.92) 100%
+			),
+			radial-gradient(circle at 10% 20%, rgba(86, 199, 187, 0.14), transparent 45%),
+			radial-gradient(circle at 90% 78%, rgba(50, 93, 89, 0.08), transparent 42%);
+		border: 1px solid rgba(86, 199, 187, 0.22);
+		color: var(--wport-color-text);
+		overflow: hidden;
+		position: relative;
+	}
+
+	.wport-hero-inner {
+		max-width: var(--wide-width);
+		margin: 0 auto;
+		padding: var(--spacing-10) var(--spacing-6);
+		display: grid;
+		grid-template-columns: minmax(340px, 1fr) minmax(420px, 1.2fr);
+		gap: var(--spacing-10);
+		align-items: center;
+	}
+
+	.wport-hero::before {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 35%;
+		height: 100%;
+		background: linear-gradient(
+			90deg,
+			rgba(86, 199, 187, 0.15) 0%,
+			rgba(86, 199, 187, 0) 100%
+		);
+		pointer-events: none;
+	}
+
+	.wport-hero-content {
+		display: grid;
+		gap: var(--spacing-4);
+		padding-left: var(--spacing-2);
+		position: relative;
+		z-index: 1;
+		align-content: center;
+	}
+
+	.wport-kicker {
+		font-size: var(--font-size-xs);
+		letter-spacing: var(--tracking-wider);
+		color: var(--wport-color-primary-strong);
+		font-weight: 600;
+		text-transform: uppercase;
+	}
+
+	.wport-title {
+		font-size: clamp(2rem, 4vw, 3.25rem);
+		line-height: 1.15;
+		letter-spacing: -0.02em;
+		color: var(--wport-color-primary-strong);
+	}
+
+	.wport-subtitle {
+		font-size: var(--font-size-lg);
+		color: var(--wport-color-text-muted);
+		max-width: 34ch;
+	}
+
+	.wport-cta-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--spacing-3);
+		margin-top: var(--spacing-2);
+	}
+
+	.wport-hero-visual {
+		position: relative;
+		padding: var(--spacing-2);
+		z-index: 1;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.wport-hero-main {
+		width: 100%;
+		max-width: 760px;
+		min-width: 420px;
+		height: auto;
+		filter: drop-shadow(0 26px 46px rgba(22, 46, 51, 0.28));
+	}
+
+	.wport-animate-main {
+		animation:
+			wport-reveal-up 0.62s ease 0.08s both,
+			wport-float-y 4.5s ease-in-out 0.9s infinite;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.wport-animate-main {
+			animation: none;
+		}
+	}
+
 	.home-content {
 		max-width: var(--wide-width);
 		margin: 0 auto;
@@ -407,7 +542,21 @@ function formatDate(date: Date | null | undefined) {
 	}
 
 	/* Responsive */
-	@media (max-width: 900px) {
+	@media (max-width: 820px) {
+		.wport-hero-inner {
+			grid-template-columns: 1fr;
+			gap: var(--spacing-6);
+			padding: var(--spacing-7) var(--spacing-4);
+		}
+
+		.wport-subtitle {
+			max-width: none;
+		}
+
+		.wport-hero-main {
+			min-width: 0;
+		}
+
 		.home-content {
 			padding: var(--spacing-6) var(--spacing-4) var(--spacing-12);
 		}

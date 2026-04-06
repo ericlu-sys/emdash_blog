@@ -1,0 +1,28 @@
+.wport-kit {
+	font-family: var(--wport-font-family);
+	color: var(--wport-color-text);
+	line-height: var(--wport-line-height);
+}
+
+.wport-kit * {
+	font-family: inherit;
+}
+
+.wport-kit ::selection {
+	background: var(--wport-color-primary);
+	color: #fff;
+}
+
+.wport-kit a {
+	transition:
+		color var(--wport-motion-fast),
+		opacity var(--wport-motion-fast);
+}
+
+.wport-kit a:hover {
+	opacity: 0.92;
+}
+
+.wport-kit button {
+	font-family: inherit;
+}

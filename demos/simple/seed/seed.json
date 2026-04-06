@@ -9,7 +9,15 @@
 
 	"settings": {
 		"title": "My Blog",
-		"tagline": "Thoughts on building for the web"
+		"tagline": "Thoughts on building for the web",
+		"logo": {
+			"url": "/branding/logo-emdash.svg",
+			"alt": "My Blog"
+		},
+		"favicon": {
+			"url": "/branding/favicon-emdash.svg",
+			"alt": "My Blog favicon"
+		}
 	},
 
 	"collections": [
@@ -273,8 +281,8 @@
 				"slug": "building-for-the-long-term",
 				"status": "published",
 				"data": {
-					"title": "Building for the Long Term",
-					"excerpt": "The frameworks will change. The databases will change. What survives is the clarity of your thinking.",
+					"title": "為長期而建：在技術浪潮中保持穩定",
+					"excerpt": "框架會變、資料庫會變，但能留下來的是清楚的思考、穩定的結構與可維護的決策。",
 					"featured_image": {
 						"$media": {
 							"url": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&h=800&fit=crop",
@@ -287,55 +295,67 @@
 							"_type": "block",
 							"style": "normal",
 							"children": [
-								{
-									"_type": "span",
-									"text": "Every few years the industry collectively decides that everything we've been doing is wrong and there's a better way. New frameworks, new paradigms, new build tools. The churn is relentless, and if you're not careful, you spend more time migrating than building."
-								}
-							]
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "I've been writing software long enough to have seen several of these cycles. jQuery to Backbone to Angular to React to whatever comes next. Each transition felt urgent at the time. Looking back, the things that actually mattered were rarely about the framework."
-								}
+								{ "_type": "span", "text": "每隔幾年，整個產業就會一起宣告「舊方法不行了」，然後推出一套全新的框架、工具與最佳實踐。這些變化有時確實有價值，但如果你每次都全盤跟進，很容易把大部分時間花在遷移，而不是解決真正的產品問題。" }
 							]
 						},
 						{
 							"_type": "block",
 							"style": "h2",
-							"children": [{ "_type": "span", "text": "What survives" }]
+							"children": [{ "_type": "span", "text": "短期效率與長期成本" }]
 						},
 						{
 							"_type": "block",
 							"style": "normal",
 							"children": [
-								{
-									"_type": "span",
-									"text": "Clean data models survive. Clear boundaries between systems survive. Good naming survives. The decision to keep things simple when you could have made them clever - that definitely survives."
-								}
+								{ "_type": "span", "text": "在專案初期，追求速度很正常；但若每一次技術選擇都只看眼前效率，幾個版本後就會堆出難以維護的系統。真正成熟的團隊會在「現在做得快」和「一年後還能改」之間取得平衡。" }
 							]
 						},
 						{
 							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "What doesn't survive is code that was written to impress, abstractions built for problems that never materialized, and architectures designed around a framework's opinions rather than the domain's reality."
-								}
-							]
+							"style": "h2",
+							"children": [{ "_type": "span", "text": "真正會留下來的東西" }]
 						},
 						{
 							"_type": "block",
 							"style": "normal",
 							"children": [
-								{
-									"_type": "span",
-									"text": "The best code I've written is boring. It reads like prose, does one thing well, and doesn't require a PhD in category theory to understand. The worst code I've written was technically impressive at the time."
-								}
+								{ "_type": "span", "text": "能跨越技術週期的，通常不是某個框架 API，而是乾淨的資料模型、清楚的邊界、可理解的命名與穩定的領域語意。當底層結構正確時，換框架通常只是搬運；當結構混亂時，任何改動都會變成重寫。" }
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [{ "_type": "span", "text": "避免過度設計" }]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{ "_type": "span", "text": "很多系統不是壞在太簡單，而是壞在太聰明。為了尚未出現的需求先做抽象、為了展示技巧堆疊模式，最後只會讓新同事讀不懂、老同事不敢動。務實的原則是：先把現在的問題解決好，再讓程式碼保留合理的延展空間。" }
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [{ "_type": "span", "text": "可演進的工程習慣" }]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{ "_type": "span", "text": "長期可維護不是一次性的架構決策，而是日常習慣：小步重構、清楚的提交訊息、對關鍵流程補測試、定期清理死碼、在 code review 對命名與邊界保持一致標準。這些看似瑣碎，卻是讓產品能持續迭代的真正基礎。" }
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [{ "_type": "span", "text": "結語" }]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{ "_type": "span", "text": "技術潮流一定會持續改變，但你的決策品質會被保留在程式碼裡很多年。與其追逐每個新名詞，不如建立一套能被團隊理解、能被未來自己接手、也能在需求變動下持續演進的系統。" }
 							]
 						}
 					]
@@ -690,8 +710,8 @@
 				"slug": "notes-on-simplicity",
 				"status": "published",
 				"data": {
-					"title": "Notes on Simplicity",
-					"excerpt": "Simplicity isn't the absence of complexity. It's the result of understanding a problem well enough to solve it cleanly.",
+					"title": "關於簡潔的筆記",
+					"excerpt": "簡潔不是沒有複雜度，而是你足夠理解問題後，能用更乾淨的方式解決它。",
 					"featured_image": {
 						"$media": {
 							"url": "https://images.unsplash.com/photo-1559051668-e1fa58f25786?w=1200&h=800&fit=crop",
@@ -704,45 +724,67 @@
 							"_type": "block",
 							"style": "normal",
 							"children": [
-								{
-									"_type": "span",
-									"text": "Every piece of software starts simple. A few files, a clear purpose, a small surface area. Then features get added, edge cases get handled, and before long you're looking at something that requires a diagram to understand. This isn't inevitable, but it takes discipline to prevent."
-								}
-							]
-						},
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "The hard part of simplicity isn't the initial design. It's the ongoing resistance to complication. Every feature request, every bug fix, every refactor is an opportunity to add complexity. Saying no is the most important design skill, and the least celebrated."
-								}
+								{ "_type": "span", "text": "每個軟體一開始都很簡單：檔案不多、目標明確、介面乾淨。直到功能逐步堆疊、例外情境越補越多，最後系統變得需要畫圖才能講清楚。這不完全是必然，而是日常決策是否有意識地守住邊界。" }
 							]
 						},
 						{
 							"_type": "block",
 							"style": "h2",
-							"children": [{ "_type": "span", "text": "Removing as a feature" }]
+							"children": [{ "_type": "span", "text": "簡潔最難的是持續維持" }]
 						},
 						{
 							"_type": "block",
 							"style": "normal",
 							"children": [
-								{
-									"_type": "span",
-									"text": "The best version of a product often has fewer features than the previous one. Not because features were missing, but because someone had the courage to remove things that weren't earning their keep. Every feature has a cost - in maintenance, in cognitive load, in the weight of the interface."
-								}
+								{ "_type": "span", "text": "真正困難的不在起始設計，而是在每次需求、修 bug、重構時，不讓系統往更重的方向滑。每一次變更都可能多加一層條件、多一個抽象、多一個「先留著」的分支。長期來看，這些小加總會壓垮可讀性。" }
 							]
 						},
 						{
 							"_type": "block",
+							"style": "h2",
+							"children": [{ "_type": "span", "text": "把刪除當成一種功能" }]
+						},
+						{
+							"_type": "block",
 							"style": "normal",
 							"children": [
-								{
-									"_type": "span",
-									"text": "Simplicity is a practice, not a destination. You never arrive at simple. You just keep asking: is this necessary? Could this be clearer? Is there a way to solve this problem by removing something instead of adding something? The answer is yes more often than you'd expect."
-								}
+								{ "_type": "span", "text": "成熟產品常常不是功能更多，而是更精準。某些功能如果長期低使用、維護成本高、又讓流程變複雜，就該被重新定義或移除。每個功能都有隱性成本：維護成本、學習成本、介面負擔。" }
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [{ "_type": "span", "text": "命名與邊界決定可讀性" }]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{ "_type": "span", "text": "簡潔程式碼的核心不是短，而是可預測。好的命名能讓人不用跳轉就理解意圖；清楚的模組邊界能讓修改範圍被控制。當你需要在太多檔案來回追蹤，通常代表設計已經失去簡潔性。" }
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [{ "_type": "span", "text": "在團隊中落地簡潔" }]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{ "_type": "span", "text": "要把簡潔落到團隊，需要制度化：在 code review 針對命名與邊界提問、讓 PR 規模維持小步、針對重複邏輯定期整併。簡潔不是個人偏好，而是可維護性的共同語言。" }
+							]
+						},
+						{
+							"_type": "block",
+							"style": "h2",
+							"children": [{ "_type": "span", "text": "結語" }]
+						},
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{ "_type": "span", "text": "簡潔是一種持續練習，不是一次到位。你不會「抵達簡潔」，只能在每次改動時反覆追問：這是必要的嗎？這能更清楚嗎？能不能透過刪減而不是堆疊來解決問題？" }
 							]
 						}
 					]

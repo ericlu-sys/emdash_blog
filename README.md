@@ -192,6 +192,22 @@ pnpm format        # format with oxfmt
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contributor guide.
 
+## WPORT Style Layers (Demo)
+
+The `demos/simple` app uses a 3-layer style setup for WPORT-inspired branding:
+
+- `demos/simple/src/styles/wport-tokens.css` - global design tokens (colors, radius, typography, motion)
+- `demos/simple/src/styles/wport-base.css` - base layer (font and baseline inheritance)
+- `demos/simple/src/styles/wport-primitives.css` - reusable UI primitives (buttons/chips/cards + shared animations)
+
+### If you want to change the style
+
+- Change brand colors, radius, spacing feel, typography scale -> edit `wport-tokens.css`
+- Change default text rendering / base font behavior -> edit `wport-base.css`
+- Change button/chip/card visuals or shared motion behavior -> edit `wport-primitives.css`
+- Change page-specific layout and composition (Hero layout, section spacing) -> edit `demos/simple/src/pages/index.astro`
+- Change header-specific layout or interactions -> edit `demos/simple/src/layouts/Base.astro`
+
 ## Repository Structure
 
 ```
