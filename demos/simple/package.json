@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "deploy": "astro build && wrangler deploy",
     "preview": "astro preview",
     "start": "node ./dist/server/entry.mjs",
     "bootstrap": "emdash init && emdash seed",
@@ -16,8 +17,10 @@
     "typecheck": "astro check"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "catalog:",
     "@astrojs/node": "catalog:",
     "@astrojs/react": "catalog:",
+    "@emdash-cms/cloudflare": "workspace:*",
     "@emdash-cms/plugin-audit-log": "workspace:*",
     "@emdash-cms/plugin-color": "workspace:*",
     "astro": "catalog:",
@@ -27,7 +30,9 @@
     "react-dom": "catalog:"
   },
   "devDependencies": {
-    "@astrojs/check": "catalog:"
+    "@astrojs/check": "catalog:",
+    "@cloudflare/workers-types": "catalog:",
+    "wrangler": "catalog:"
   },
   "peerDependencies": {},
   "optionalDependencies": {}
