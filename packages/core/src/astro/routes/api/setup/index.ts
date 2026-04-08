@@ -17,6 +17,7 @@ import { OptionsRepository } from "#db/repositories/options.js";
 import { applySeed } from "#seed/apply.js";
 import { loadSeed } from "#seed/load.js";
 import { validateSeed } from "#seed/validate.js";
+import { invalidateSetupStatusCache } from "./status.js";
 
 export const POST: APIRoute = async ({ request, locals }) => {
 	const { emdash } = locals;
@@ -114,6 +115,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 		}
 
 		// 6. Return success with result
+		await invalidateSetupStatusCache(request.url);
 		return apiSuccess({
 			success: true,
 			// In external auth mode, setup is complete - redirect to admin

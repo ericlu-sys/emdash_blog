@@ -17,4 +17,7 @@
 			"bucket_name": "emdash-test-media",
 		},
 	],
+	"observability": {
+		"enabled": true,
+	},
 }

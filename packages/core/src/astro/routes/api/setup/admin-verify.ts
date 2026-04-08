@@ -18,6 +18,7 @@ import { setupAdminVerifyBody } from "#api/schemas.js";
 import { createChallengeStore } from "#auth/challenge-store.js";
 import { getPasskeyConfig } from "#auth/passkey-config.js";
 import { OptionsRepository } from "#db/repositories/options.js";
+import { invalidateSetupStatusCache } from "./status.js";
 
 export const POST: APIRoute = async ({ request, locals }) => {
 	const { emdash } = locals;
@@ -84,6 +85,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
 		// Clean up setup state
 		await options.delete("emdash:setup_state");
+		await invalidateSetupStatusCache(request.url);
 
 		return apiSuccess({
 			success: true,

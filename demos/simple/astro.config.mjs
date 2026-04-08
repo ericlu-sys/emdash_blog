@@ -11,7 +11,6 @@ const isProd = import.meta.env.PROD;
 const database = isProd
 	? d1({
 			binding: "DB",
-			session: "auto",
 		})
 	: sqlite({ url: "file:./data.db" });
 const storage = isProd

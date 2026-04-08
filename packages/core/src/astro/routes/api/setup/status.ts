@@ -8,11 +8,43 @@ import type { APIRoute } from "astro";
 
 export const prerender = false;
 
-import { apiError, apiSuccess, handleError } from "#api/error.js";
+import { apiError, handleError } from "#api/error.js";
 import { getAuthMode } from "#auth/mode.js";
 import { loadUserSeed } from "#seed/load.js";
 
-export const GET: APIRoute = async ({ locals }) => {
+const SETUP_STATUS_CACHE_TTL_SECONDS = 10;
+
+export function getSetupStatusCacheRequest(requestUrl: string): Request {
+	const cacheUrl = new URL("/_emdash/api/setup/status", requestUrl);
+	return new Request(cacheUrl.toString(), { method: "GET" });
+}
+
+export async function invalidateSetupStatusCache(requestUrl: string): Promise<void> {
+	const cache = globalThis.caches?.default;
+	if (!cache) return;
+	await cache.delete(getSetupStatusCacheRequest(requestUrl));
+}
+
+function setupStatusSuccess<T>(data: T): Response {
+	return Response.json(
+		{ data },
+		{
+			status: 200,
+			// Keep browser caching near-zero; edge/runtime cache is handled below.
+			headers: {
+				"Cache-Control": `public, max-age=0, s-maxage=${SETUP_STATUS_CACHE_TTL_SECONDS}`,
+			},
+		},
+	);
+}
+
+export const GET: APIRoute = async ({ request, locals }) => {
+	const cache = globalThis.caches?.default;
+	if (cache) {
+		const cached = await cache.match(getSetupStatusCacheRequest(request.url));
+		if (cached) return cached;
+	}
+
 	const { emdash } = locals;
 
 	if (!emdash?.db) {
@@ -53,9 +85,16 @@ export const GET: APIRoute = async ({ locals }) => {
 
 		// Setup is complete only if flag is set AND users exist
 		if (isComplete && hasUsers) {
-			return apiSuccess({
+			const response = setupStatusSuccess({
 				needsSetup: false,
 			});
+			if (cache) {
+				await cache.put(
+					getSetupStatusCacheRequest(request.url),
+					new Response(response.body, response),
+				);
+			}
+			return response;
 		}
 
 		// Determine current step
@@ -93,9 +132,16 @@ export const GET: APIRoute = async ({ locals }) => {
 
 		// In external auth mode, setup is complete if flag is set (no users required initially)
 		if (useExternalAuth && isComplete) {
-			return apiSuccess({
+			const response = setupStatusSuccess({
 				needsSetup: false,
 			});
+			if (cache) {
+				await cache.put(
+					getSetupStatusCacheRequest(request.url),
+					new Response(response.body, response),
+				);
+			}
+			return response;
 		}
 
 		// Setup needed - try to load seed file info
@@ -109,13 +155,17 @@ export const GET: APIRoute = async ({ locals }) => {
 				}
 			: null;
 
-		return apiSuccess({
+		const response = setupStatusSuccess({
 			needsSetup: true,
 			step,
 			seedInfo,
 			// Tell the wizard which auth mode is active
 			authMode: useExternalAuth ? authMode.providerType : "passkey",
 		});
+		if (cache) {
+			await cache.put(getSetupStatusCacheRequest(request.url), new Response(response.body, response));
+		}
+		return response;
 	} catch (error) {
 		return handleError(error, "Failed to check setup status", "SETUP_STATUS_ERROR");
 	}

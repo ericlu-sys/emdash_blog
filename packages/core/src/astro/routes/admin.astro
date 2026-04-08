@@ -16,6 +16,7 @@ export const prerender = false;
 const defaultFaviconHref =
 	"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%AB%3C/text%3E%3C/svg%3E";
 let adminFaviconHref = defaultFaviconHref;
+const isSetupRoute = Astro.url.pathname === "/_emdash/admin/setup";
 
 const { emdash } = Astro.locals as {
 	emdash?: {
@@ -24,7 +25,7 @@ const { emdash } = Astro.locals as {
 	};
 };
 
-if (emdash?.db) {
+if (!isSetupRoute && emdash?.db) {
 	try {
 		const favicon = await getSiteSettingWithDb("favicon", emdash.db, emdash.storage ?? null);
 		if (favicon?.url) {
@@ -33,6 +34,14 @@ if (emdash?.db) {
 	} catch {
 		// Fall back to the built-in icon if settings lookup fails.
 	}
+}
+
+if (isSetupRoute) {
+	// Short edge cache for setup shell while keeping browser cache near-zero.
+	Astro.response.headers.set(
+		"Cache-Control",
+		"public, max-age=0, s-maxage=10, stale-while-revalidate=30",
+	);
 }
 ---
 

@@ -181,6 +181,8 @@ const PUBLIC_RUNTIME_ROUTES = new Set(["/sitemap.xml", "/robots.txt"]);
 export const onRequest = defineMiddleware(async (context, next) => {
 	const { request, locals, cookies } = context;
 	const url = context.url;
+	const isSetupBootstrapRoute =
+		url.pathname === "/_emdash/admin/setup" || url.pathname === "/_emdash/api/setup/status";
 
 	// Process /_emdash routes and public routes with an active session
 	// (logged-in editors need the runtime for toolbar/visual editing on public pages)
@@ -245,11 +247,14 @@ export const onRequest = defineMiddleware(async (context, next) => {
 			// Runtime init runs migrations, so the DB is guaranteed set up
 			setupVerified = true;
 
-			// Get manifest (cached after first call)
-			const manifest = await runtime.getManifest();
+			// Setup bootstrap routes don't need manifest data and can skip
+			// the expensive per-request manifest build.
+			if (!isSetupBootstrapRoute) {
+				const manifest = await runtime.getManifest();
+				locals.emdashManifest = manifest;
+			}
 
 			// Attach to locals for route handlers
-			locals.emdashManifest = manifest;
 			locals.emdash = {
 				// Content handlers
 				handleContentList: runtime.handleContentList.bind(runtime),
