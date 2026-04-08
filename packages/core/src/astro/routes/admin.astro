@@ -9,8 +9,31 @@ import "@emdash-cms/admin/styles.css";
 // Use package-qualified import so Astro generates a proper module URL
 // (relative imports resolve to absolute paths which break client hydration)
 import AdminWrapper from "emdash/routes/PluginRegistry";
+import { getSiteSettingWithDb } from "../../settings/index.js";
 
 export const prerender = false;
+
+const defaultFaviconHref =
+	"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%AB%3C/text%3E%3C/svg%3E";
+let adminFaviconHref = defaultFaviconHref;
+
+const { emdash } = Astro.locals as {
+	emdash?: {
+		db?: Parameters<typeof getSiteSettingWithDb>[1];
+		storage?: Parameters<typeof getSiteSettingWithDb>[2];
+	};
+};
+
+if (emdash?.db) {
+	try {
+		const favicon = await getSiteSettingWithDb("favicon", emdash.db, emdash.storage ?? null);
+		if (favicon?.url) {
+			adminFaviconHref = favicon.url;
+		}
+	} catch {
+		// Fall back to the built-in icon if settings lookup fails.
+	}
+}
 ---
 
 <!doctype html>
@@ -18,10 +41,7 @@ export const prerender = false;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link
-			rel="icon"
-			href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%AB%3C/text%3E%3C/svg%3E"
-		/>
+		<link rel="icon" href={adminFaviconHref} />
 		<title>EmDash Admin</title>
 	</head>
 	<body>
